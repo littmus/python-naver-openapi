@@ -5,12 +5,12 @@ version = '0.1'
 setup(
     name='python-naver-openapi',
     version=version,
-    description='Python wrapper for Naver Openapi',
+    description='Python wrapper for Naver OpenApi',
     author='Shin Dongwon',
     author_email='sdw2648@gmail.com',
-    url='https://github.com/littmus/python-naver-openapi'
+    url='https://github.com/littmus/python-naver-openapi',
     packages=['naver_openapi'],
-    license='MIT License'
+    license='MIT License',
     include_package_data=True,
     zip_safe=True
 )

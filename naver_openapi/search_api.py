@@ -67,6 +67,7 @@ class Search(object):
             when you uses advanced search.
             """
             detail_keys += ['d_dafr', 'd_dato', 'd_catg']
+            # need to implement category verify
             for key in details:
                 if key not in detail_keys:
                     raise Exception
@@ -152,53 +153,234 @@ class Search(object):
               country=None, yearfrom=None, yearto=None):
         """
         @parameter genre : str, range(1, 29), see http://goo.gl/RraCGu
-        @parameter country : 
-        @parameter yearfrom :
-        @parameter yaerto : 
+        @parameter country : [KR, JP, US, HK, GB, FR, ETC]
+        @parameter yearfrom : mimimum year value
+        @parameter yaerto : maximum year value
         """
-        pass
+        if target != 'movie':
+            raise Exception
 
-    def car(self):
-        pass
+        if genre is not None and int(genre) not in range(1, 29):
+            raise Exception
 
-    def cafearticle(self):
-        pass
+        countries = ['KR', 'JP', 'US', 'HK', 'GB', 'FR', 'ETC']
+        if country is not None and country not in countries:
+            raise Exception
 
-    def adult(self):
-        pass
+        if (yearfrom is None and yearto is not None) or \
+           (yearfrom is not None and yearto is None):
+            raise Exception
 
-    def image(self):
-        pass
+        params = dict(
+            target=target, query=query, display=display, start=start,
+            genre=genre, country=country, yearfrom=yearfrom, yearto=yearto
+        )
 
-    def movieman(self):
-        pass
+        data = self._call(self.host, params)
 
-    def encyc(self):
-        pass
+        return data
 
-    def webkr(self):
-        pass
+    def car(self, target='car', query='', display=10, start=1,
+            yearfrom=None, yearto=None):
+        if target != 'car':
+            raise Exception
 
-    def errata(self):
-        pass
+        if (yearfrom is None and yearto is not None) or \
+           (yearfrom is not None and yearto is None):
+            raise Exception
 
-    def doc(self):
-        pass
+        params = dict(
+            target=target, query=query, display=display, start=start,
+            yearfrom=yearfrom, yearto=yearto
+        )
 
-    def local(self):
-        pass
+        data = self._call(self.host, params)
 
-    def blog(self):
-        pass
+        return data
 
-    def news(self):
-        pass
+    def cafearticle(self, target='cafearticle', query='', display=10, start=1,
+                    sort='sim'):
+        """
+        @parameter sort : sorting options, [sim, date]
+        """
+        if target != 'cafearticle':
+            raise Exception
 
-    def shortcut(self):
-        pass
+        if sort not in ['sim', 'date']:
+            raise Exception
+
+        params = dict(
+            target=target, query=query, display=display, start=start, sort=sort
+        )
+
+        data = self._call(self.host, params)
+
+        return data
+
+    def adult(self, target='adult', query=''):
+        if target != 'adult':
+            raise Exception
+
+        params = dict(target=target, query=query)
+
+        data = self._call(self.host, params)
+
+        return data
+
+    def image(self, target='image', query='', display=10, start=1, sort='sim',
+              filter='all'):
+        """
+        @parameter sort : sorting options, [sim, date]
+        @parameter filter : size filtering, [all, large, medium, small]
+        """
+        if target != 'image':
+            raise Exception
+
+        if sort not in ['sim', 'date']:
+            raise Exception
+
+        if filter not in ['all', 'large', 'medium', 'small']:
+            raise Exception
+
+        params = dict(
+            target=target, query=query, display=display, start=start,
+            sort=sort, filter=filter
+        )
+
+        data = self._call(self.host, params)
+
+        return data
+
+    def movieman(self, target='movieman', query='', display=10, start=1):
+        if target != 'movieman':
+            raise Exception
+
+        params = dict(target=target, query=query, display=display, start=start)
+
+        data = self._call(self.host, params)
+
+        return data
+
+    def encyc(self, target='encyc', query='', display=10, start=1):
+        if target != 'encyc':
+            raise Exception
+
+        params = dict(target=target, query=query, display=display, start=start)
+
+        data = self._call(self.host, params)
+
+        return data
+
+    def webkr(self, target='webkr', query='', display=10, start=1,
+              domain=None):
+        """
+        @parameter domain : specific site domain for search, #need to test
+        """
+        if target != 'webkr':
+            raise Exception
+
+        params = dict(target=target, query=query, display=display, start=start)
+
+        if domain is not None:
+            params['domain'] = domain
+
+        data = self._call(self.host, params)
+
+        return data
+
+    def errata(self, target='errata', query=''):
+        if target != 'errata':
+            raise Exception
+
+        params = dict(target=target, query=query)
+
+        data = self._call(self.host, params)
+
+        return data
+
+    def doc(self, target='doc', query='', display=10, start=1):
+        if target != 'doc':
+            raise Exception
+
+        params = dict(target=target, query=query, display=display, start=start)
+
+        data = self._call(self.host, params)
+
+        return data
+
+    def local(self, target='local', query='', display=10, start=1,
+              sort='random'):
+        """
+        @parameter sort : sorting options, [random, comment, vote]
+        """
+        if target != 'local':
+            raise Exception
+
+        if sort not in ['random', 'comment', 'vote']:
+            raise Exception
+
+        params = dict(
+            target=target, query=query, display=display, start=start, sort=sort
+        )
+
+        data = self._call(self.host, params)
+
+        return data
+
+    def blog(self, target='blog', query='', display=10, start=1, sort='sim'):
+        """
+        @parameter sort : sorting options, [sim, date]
+        """
+        if target != 'blog':
+            raise Exception
+
+        if sort not in ['sim', 'date']:
+            raise Exception
+
+        params = dict(
+            target=target, query=query, display=display, start=start, sort=sort
+        )
+
+        data = self._call(self.host, params)
+
+        return data
+
+    def news(self, target='blog', query='', display=10, start=1, sort='date'):
+        """
+        @parameter sort : sorting options, [date, sim]
+        """
+        if target != 'blog':
+            raise Exception
+
+        if sort not in ['date', 'sim']:
+            raise Exception
+
+        params = dict(
+            target=target, query=query, display=display, start=start, sort=sort
+        )
+
+        data = self._call(self.host, params)
+
+        return data
+
+    def shortcut(self, target='shortcut', query=''):
+        if target != 'shortcut':
+            raise Exception
+
+        params = dict(target=target, query=query)
+
+        data = self._call(self.host, params)
+
+        return data
 
     def _call(self, host, params):
         params['key'] = self.key
+
+        if 'dispaly' in params and params['display'] > 100:
+            raise Exception
+
+        if 'start' in params and params['start'] > 1000:
+            raise Exception
 
         encoded_params = []
         for key, value in params.items():
@@ -213,6 +395,6 @@ class Search(object):
 
         code, data = http.get(request, self.user_agent)
 
-        print code, data
+        print code
 
         return data
