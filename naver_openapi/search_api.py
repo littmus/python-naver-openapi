@@ -171,10 +171,17 @@ class Search(object):
            (yearfrom is not None and yearto is None):
             raise Exception
 
-        params = dict(
-            target=target, query=query, display=display, start=start,
-            genre=genre, country=country, yearfrom=yearfrom, yearto=yearto
-        )
+        params = dict(target=target, query=query, display=display, start=start)
+
+        if genre is not None:
+            params['genre'] = genre
+
+        if country is not None:
+            params['country'] = country
+
+        if yearfrom is not None and yearto is not None:
+            params['yearfrom'] = yearfrom
+            params['yearto'] = yearto
 
         data = self._call(self.host, params)
 

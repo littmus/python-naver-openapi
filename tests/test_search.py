@@ -54,7 +54,7 @@ class NaverOpenApiSearchTests(unittest.TestCase):
         self.search.image(query='landscape', filter='large')
 
     def test_search_movieman(self):
-        self.search.movieman(query='robert downing jr')
+        self.search.movieman(query='robert downey jr.')
 
     def test_search_encyc(self):
         self.search.encyc(query=u'광복절')
