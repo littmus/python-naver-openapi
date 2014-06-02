@@ -402,6 +402,4 @@ class Search(object):
 
         code, data = http.get(request, self.user_agent)
 
-        print code
-
         return data
