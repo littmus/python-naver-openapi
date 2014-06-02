@@ -40,7 +40,7 @@ class NaverOpenApiSearchTests(unittest.TestCase):
 
     def test_search_car(self):
         self.search.car(query='BMW')
-        self.search.car(query='Ferari', yearfrom=1990, yearto=2000)
+        self.search.car(query='Ferrari', yearfrom=1990, yearto=2000)
 
     def test_search_cafearticle(self):
         self.search.car(query=u'인테리어')
