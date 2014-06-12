@@ -1,16 +1,17 @@
 # -*- coding:utf-8 -*-
-
 import sys
 import unittest
 sys.path.append('../')
 import naver_openapi
 
-key = 'enter_your_key'
+
+search_key = 'enter_your_key'
+shorturl_key = 'enter_your_key'
 
 
 class NaverOpenApiSearchTests(unittest.TestCase):
     def setUp(self):
-        self.search = naver_openapi.Search(key)
+        self.search = naver_openapi.Search(search_key)
 
     def test_search_rank(self):
         self.search.rank()
@@ -75,6 +76,15 @@ class NaverOpenApiSearchTests(unittest.TestCase):
 
     def test_search_shortcut(self):
         self.search.shortcut(query=u'백악관')
+
+
+class NaverOpenApiShortURLTests(unittest.TestCase):
+    def setUp(self):
+        self.shorturl = naver_openapi.ShortURL(key=shorturl_key)
+
+    def test_shorturl(self):
+        self.shorturl.get_shorturl(url='www.naver.com')
+
 
 if __name__ == '__main__':
     unittest.main()

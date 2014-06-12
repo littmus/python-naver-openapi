@@ -25,6 +25,9 @@ class Search(object):
         @parameter target : rank / ranktheme
         @parameter query : nexearch / [themes]
         """
+        print 'Service ended.'
+        return None
+
         if target == 'rank':
             if query != 'nexearch':
                 raise Exception
@@ -107,6 +110,9 @@ class Search(object):
         """
         @parameter sort : sorting options, [sim, member, newarticles, rank]
         """
+        print 'Service ended.'
+        return None
+
         if target != 'cafe':
             raise Exception
 
@@ -122,6 +128,9 @@ class Search(object):
         return data
 
     def recmd(self, target='recmd', query=''):
+        print 'Service ended.'
+        return None
+
         if target != 'recmd':
             raise Exception
 
@@ -189,6 +198,9 @@ class Search(object):
 
     def car(self, target='car', query='', display=10, start=1,
             yearfrom=None, yearto=None):
+        print 'Service ended.'
+        return None
+
         if target != 'car':
             raise Exception
 
@@ -259,6 +271,9 @@ class Search(object):
         return data
 
     def movieman(self, target='movieman', query='', display=10, start=1):
+        print 'Service ended.'
+        return None
+
         if target != 'movieman':
             raise Exception
 
@@ -371,6 +386,9 @@ class Search(object):
         return data
 
     def shortcut(self, target='shortcut', query=''):
+        print 'Service ended.'
+        return None
+
         if target != 'shortcut':
             raise Exception
 
@@ -403,3 +421,4 @@ class Search(object):
         code, data = http.get(request, self.user_agent)
 
         return data
+
