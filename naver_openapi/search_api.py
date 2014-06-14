@@ -1,6 +1,7 @@
 import sys
 import urllib
 import http
+from exceptions import *
 
 
 def _utf8(v):
@@ -25,22 +26,21 @@ class Search(object):
         @parameter target : rank / ranktheme
         @parameter query : nexearch / [themes]
         """
-        print 'Service ended.'
-        return None
+        raise APIServiceEndedException
 
         if target == 'rank':
             if query != 'nexearch':
-                raise Exception
+                raise InvalidAPIArgumentsException
 
         elif target == 'ranktheme':
             themes = ['movie', 'people', 'foreignactor', 'perform']
             themes += ['drama', 'broadcast', 'book']
 
             if query not in themes:
-                raise Exception
+                raise InvalidAPIArgumentsException
 
         else:
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(target=target, query=query)
 
@@ -59,10 +59,10 @@ class Search(object):
 
         elif target == 'book_adv':
             if details is None:
-                raise Exception
+                raise InvalidArgumentsException
 
             if len(details) == 0:
-                raise Exception
+                raise InvalidArgumentsException
 
             detail_keys = ['d_titl', 'd_auth', 'd_cont', 'd_isbn']
             """
@@ -73,10 +73,10 @@ class Search(object):
             # need to implement category verify
             for key in details:
                 if key not in detail_keys:
-                    raise Exception
+                    raise InvalidArgumentsException
 
         else:
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(target=target, query=query, display=display, start=start)
 
@@ -93,10 +93,10 @@ class Search(object):
         @parameter sort : sorting options, [sim, date, asc, dsc]
         """
         if target != 'shop':
-            raise Exception
+            raise InvalidArgumentsException
 
         if sort not in ['sim', 'date', 'asc', 'dsc']:
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(
             target=target, query=query, display=display, start=start, sort=sort
@@ -110,14 +110,13 @@ class Search(object):
         """
         @parameter sort : sorting options, [sim, member, newarticles, rank]
         """
-        print 'Service ended.'
-        return None
+        raise APIServiceEndedException
 
         if target != 'cafe':
-            raise Exception
+            raise InvalidArgumentsException
 
         if sort not in ['sim', 'member', 'newarticles', 'rank']:
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(
             target=target, query=query, display=display, start=start, sort=sort
@@ -128,11 +127,10 @@ class Search(object):
         return data
 
     def recmd(self, target='recmd', query=''):
-        print 'Service ended.'
-        return None
+        raise APIServiceEndedException
 
         if target != 'recmd':
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(target=target, query=query)
 
@@ -145,10 +143,10 @@ class Search(object):
         @parameter sort : sorting options, [sim, date, count, point]
         """
         if target != 'kin':
-            raise Exception
+            raise InvalidArgumentsException
 
         if sort not in ['sim', 'date', 'count', 'point']:
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(
             target=target, query=query, display=display, start=start, sort=sort
@@ -167,18 +165,18 @@ class Search(object):
         @parameter yaerto : maximum year value
         """
         if target != 'movie':
-            raise Exception
+            raise InvalidArgumentsException
 
         if genre is not None and int(genre) not in range(1, 29):
-            raise Exception
+            raise InvalidArgumentsException
 
         countries = ['KR', 'JP', 'US', 'HK', 'GB', 'FR', 'ETC']
         if country is not None and country not in countries:
-            raise Exception
+            raise InvalidArgumentsException
 
         if (yearfrom is None and yearto is not None) or \
            (yearfrom is not None and yearto is None):
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(target=target, query=query, display=display, start=start)
 
@@ -198,15 +196,14 @@ class Search(object):
 
     def car(self, target='car', query='', display=10, start=1,
             yearfrom=None, yearto=None):
-        print 'Service ended.'
-        return None
+        raise APIServiceEndedException
 
         if target != 'car':
-            raise Exception
+            raise InvalidArgumentsException
 
         if (yearfrom is None and yearto is not None) or \
            (yearfrom is not None and yearto is None):
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(
             target=target, query=query, display=display, start=start,
@@ -223,10 +220,10 @@ class Search(object):
         @parameter sort : sorting options, [sim, date]
         """
         if target != 'cafearticle':
-            raise Exception
+            raise InvalidArgumentsException
 
         if sort not in ['sim', 'date']:
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(
             target=target, query=query, display=display, start=start, sort=sort
@@ -238,7 +235,7 @@ class Search(object):
 
     def adult(self, target='adult', query=''):
         if target != 'adult':
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(target=target, query=query)
 
@@ -253,13 +250,13 @@ class Search(object):
         @parameter filter : size filtering, [all, large, medium, small]
         """
         if target != 'image':
-            raise Exception
+            raise InvalidArgumentsException
 
         if sort not in ['sim', 'date']:
-            raise Exception
+            raise InvalidArgumentsException
 
         if filter not in ['all', 'large', 'medium', 'small']:
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(
             target=target, query=query, display=display, start=start,
@@ -271,11 +268,10 @@ class Search(object):
         return data
 
     def movieman(self, target='movieman', query='', display=10, start=1):
-        print 'Service ended.'
-        return None
+        raise APIServiceEndedException
 
         if target != 'movieman':
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(target=target, query=query, display=display, start=start)
 
@@ -285,7 +281,7 @@ class Search(object):
 
     def encyc(self, target='encyc', query='', display=10, start=1):
         if target != 'encyc':
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(target=target, query=query, display=display, start=start)
 
@@ -299,7 +295,7 @@ class Search(object):
         @parameter domain : specific site domain for search, #need to test
         """
         if target != 'webkr':
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(target=target, query=query, display=display, start=start)
 
@@ -312,7 +308,7 @@ class Search(object):
 
     def errata(self, target='errata', query=''):
         if target != 'errata':
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(target=target, query=query)
 
@@ -322,7 +318,7 @@ class Search(object):
 
     def doc(self, target='doc', query='', display=10, start=1):
         if target != 'doc':
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(target=target, query=query, display=display, start=start)
 
@@ -336,10 +332,10 @@ class Search(object):
         @parameter sort : sorting options, [random, comment, vote]
         """
         if target != 'local':
-            raise Exception
+            raise InvalidArgumentsException
 
         if sort not in ['random', 'comment', 'vote']:
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(
             target=target, query=query, display=display, start=start, sort=sort
@@ -354,10 +350,10 @@ class Search(object):
         @parameter sort : sorting options, [sim, date]
         """
         if target != 'blog':
-            raise Exception
+            raise InvalidArgumentsException
 
         if sort not in ['sim', 'date']:
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(
             target=target, query=query, display=display, start=start, sort=sort
@@ -372,10 +368,10 @@ class Search(object):
         @parameter sort : sorting options, [date, sim]
         """
         if target != 'blog':
-            raise Exception
+            raise InvalidArgumentsException
 
         if sort not in ['date', 'sim']:
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(
             target=target, query=query, display=display, start=start, sort=sort
@@ -386,11 +382,10 @@ class Search(object):
         return data
 
     def shortcut(self, target='shortcut', query=''):
-        print 'Service ended.'
-        return None
+        raise APIServiceEndedException
 
         if target != 'shortcut':
-            raise Exception
+            raise InvalidArgumentsException
 
         params = dict(target=target, query=query)
 
@@ -402,10 +397,10 @@ class Search(object):
         params['key'] = self.key
 
         if 'dispaly' in params and params['display'] > 100:
-            raise Exception
+            raise InvalidArgumentsException
 
         if 'start' in params and params['start'] > 1000:
-            raise Exception
+            raise InvalidArgumentsException
 
         encoded_params = []
         for key, value in params.items():
