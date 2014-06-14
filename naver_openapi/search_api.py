@@ -1,7 +1,7 @@
 import sys
 import urllib
 import http
-from exceptions import *
+from naver_openapi.exceptions import *
 
 
 def _utf8(v):
