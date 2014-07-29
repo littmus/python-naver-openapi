@@ -1,7 +1,7 @@
 class InvalidAPIArgumentsException(Exception):
-    """ Invalid api arguments """
+    """ Invalid API arguments. """
     def __str__(self):
-        return ''
+        return 'Invalid API arguments.'
 
 
 class APIServiceEndedException(Exception):
