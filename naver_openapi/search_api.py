@@ -363,11 +363,11 @@ class Search(object):
 
         return data
 
-    def news(self, target='blog', query='', display=10, start=1, sort='date'):
+    def news(self, target='news', query='', display=10, start=1, sort='date'):
         """
         @parameter sort : sorting options, [date, sim]
         """
-        if target != 'blog':
+        if target != 'news':
             raise InvalidArgumentsException
 
         if sort not in ['date', 'sim']:
