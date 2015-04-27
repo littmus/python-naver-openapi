@@ -1,8 +1,7 @@
 import sys
 import urllib
 import http
-from naver_openapi.exceptions import *
-
+from naver_openapi.decorators import *
 
 def _utf8(v):
     if isinstance(v, unicode):
@@ -20,17 +19,15 @@ class Search(object):
         (major, minor, micro, releaselevel, serial) = sys.version_info
         self.user_agent = "Python/%d.%d.%d naver_openapi_search/%s" % \
             (major, minor, micro, '?')
-
+    
+    @deprecated
     def rank(self, target='rank', query='nexearch'):
         """
         @parameter target : rank / ranktheme
         @parameter query : nexearch / [themes]
         """
-        raise APIServiceEndedException
-
-        if target == 'rank':
-            if query != 'nexearch':
-                raise InvalidAPIArgumentsException
+        if target == 'rank' and query != 'nexearch':
+            raise InvalidAPIArgumentsException
 
         elif target == 'ranktheme':
             themes = ['movie', 'people', 'foreignactor', 'perform']
@@ -70,7 +67,7 @@ class Search(object):
             when you uses advanced search.
             """
             detail_keys += ['d_dafr', 'd_dato', 'd_catg']
-            # need to implement category verify
+            #TODO implement category verify
             for key in details:
                 if key not in detail_keys:
                     raise InvalidArgumentsException
@@ -106,12 +103,11 @@ class Search(object):
 
         return data
 
+    @deprecated
     def cafe(self, target='cafe', query='', display=10, start=1, sort='sim'):
         """
         @parameter sort : sorting options, [sim, member, newarticles, rank]
         """
-        raise APIServiceEndedException
-
         if target != 'cafe':
             raise InvalidArgumentsException
 
@@ -125,10 +121,9 @@ class Search(object):
         data = self._call(self.host, params)
 
         return data
-
+    
+    @deprecated
     def recmd(self, target='recmd', query=''):
-        raise APIServiceEndedException
-
         if target != 'recmd':
             raise InvalidArgumentsException
 
@@ -193,11 +188,10 @@ class Search(object):
         data = self._call(self.host, params)
 
         return data
-
+    
+    @deprecated
     def car(self, target='car', query='', display=10, start=1,
             yearfrom=None, yearto=None):
-        raise APIServiceEndedException
-
         if target != 'car':
             raise InvalidArgumentsException
 
@@ -266,10 +260,9 @@ class Search(object):
         data = self._call(self.host, params)
 
         return data
-
+    
+    @deprecated
     def movieman(self, target='movieman', query='', display=10, start=1):
-        raise APIServiceEndedException
-
         if target != 'movieman':
             raise InvalidArgumentsException
 
@@ -380,10 +373,9 @@ class Search(object):
         data = self._call(self.host, params)
 
         return data
-
+    
+    @deprecated
     def shortcut(self, target='shortcut', query=''):
-        raise APIServiceEndedException
-
         if target != 'shortcut':
             raise InvalidArgumentsException
 
@@ -396,21 +388,22 @@ class Search(object):
     def _call(self, host, params):
         params['key'] = self.key
 
-        if 'dispaly' in params and params['display'] > 100:
+        if params.get('display') > 100:
             raise InvalidArgumentsException
 
-        if 'start' in params and params['start'] > 1000:
+        if params.get('start') > 1000:
             raise InvalidArgumentsException
 
-        encoded_params = []
-        for key, value in params.items():
-            encoded_params.append((key, _utf8(value)))
+        encoded_params = {}
+        for key, value in params.iteritems():
+            #encoded_params.append((key, _utf8(value)))
+            encoded_params[key] = _utf8(value)
 
-        params = dict(encoded_params)
+        #params = dict(encoded_params)
 
         request = '%(host)s?%(params)s' % {
             'host': host,
-            'params': urllib.urlencode(params),
+            'params': urllib.urlencode(encoded_params),
         }
 
         code, data = http.get(request, self.user_agent)

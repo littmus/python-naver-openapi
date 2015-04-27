@@ -10,7 +10,9 @@ setup(
     author_email='littmuss@gmail.com',
     url='https://github.com/littmus/python-naver-openapi',
     packages=['naver_openapi'],
+    package_dir={'naver_openapi':'naver_openapi'},
     license='MIT License',
     include_package_data=True,
-    zip_safe=True
+    zip_safe=True,
+    test_suite = 'tests'
 )

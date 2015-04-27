@@ -5,8 +5,8 @@ sys.path.append('../')
 import naver_openapi
 from naver_openapi.exceptions import APIServiceEndedException
 
-search_key = 'enter_your_key'
-shorturl_key = 'enter_your_key'
+search_key = '47049ea16d6227d365092fb3fb7fe9c7'
+shorturl_key = '32996a710d730b2009c5aa220b3f4cff'
 
 
 class NaverOpenApiSearchTests(unittest.TestCase):
@@ -14,11 +14,9 @@ class NaverOpenApiSearchTests(unittest.TestCase):
         self.search = naver_openapi.Search(search_key)
 
     def test_search_rank(self):
-        try:
-            self.search.rank()
-            self.search.rank(target='ranktheme', query='foreignactor')
-        except APIServiceEndedException:
-            pass
+        self.assertRaises(APIServiceEndedException, self.search.rank)
+        self.assertRaises(APIServiceEndedException, self.search.rank,
+                            target='ranktheme', query='foreignactor')
 
     def test_search_book(self):
         self.search.book(query='the lord of the rings')
@@ -30,16 +28,12 @@ class NaverOpenApiSearchTests(unittest.TestCase):
         self.search.shop(query=u'컴퓨터')
 
     def test_search_cafe(self):
-        try:
-            self.search.cafe(query=u'사진 찍기')
-        except APIServiceEndedException:
-            pass
+        self.assertRaises(APIServiceEndedException, self.search.cafe,
+                            query=u'사진 찍기')
 
     def test_search_recmd(self):
-        try:
-            self.search.recmd(query='nhn')
-        except APIServiceEndedException:
-            pass
+        self.assertRaises(APIServiceEndedException, self.search.recmd,
+                            query='nhn')
 
     def test_search_kin(self):
         self.search.kin(query=u'바퀴벌레 없애는 법')
@@ -49,11 +43,10 @@ class NaverOpenApiSearchTests(unittest.TestCase):
         self.search.movie(query='love', genre='5', country='FR')
 
     def test_search_car(self):
-        try:
-            self.search.car(query='BMW')
-            self.search.car(query='Ferrari', yearfrom=1990, yearto=2000)
-        except APIServiceEndedException:
-            pass
+        self.assertRaises(APIServiceEndedException, self.search.car,
+                            query='BMW')
+        self.assertRaises(APIServiceEndedException, self.search.car,
+                            query='Ferrari', yearfrom=1990, yearto=2000)
 
     def test_search_cafearticle(self):
         self.search.cafearticle(query=u'인테리어')
@@ -67,10 +60,8 @@ class NaverOpenApiSearchTests(unittest.TestCase):
         self.search.image(query='landscape', filter='large')
 
     def test_search_movieman(self):
-        try:
-            self.search.movieman(query='robert downey jr.')
-        except APIServiceEndedException:
-            pass
+        self.assertRaises(APIServiceEndedException, self.search.movieman,
+                            query='robert downey jr.')
 
     def test_search_encyc(self):
         self.search.encyc(query=u'광복절')
@@ -90,10 +81,8 @@ class NaverOpenApiSearchTests(unittest.TestCase):
         self.search.news(query=u'월드컵')
 
     def test_search_shortcut(self):
-        try:
-            self.search.shortcut(query=u'백악관')
-        except APIServiceEndedException:
-            pass
+        self.assertRaises(APIServiceEndedException, self.search.shortcut, 
+                            query=u'백악관')
 
 
 class NaverOpenApiShortURLTests(unittest.TestCase):
@@ -101,7 +90,9 @@ class NaverOpenApiShortURLTests(unittest.TestCase):
         self.shorturl = naver_openapi.ShortURL(key=shorturl_key)
 
     def test_shorturl(self):
-        self.shorturl.get_shorturl(url='www.naver.com')
+        shorturl = self.shorturl.get_shorturl(url='www.naver.com')
+        #self.assertEqual(
+        #print shorturl
 
 
 if __name__ == '__main__':
